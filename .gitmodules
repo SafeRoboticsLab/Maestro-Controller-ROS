@@ -1,0 +1,3 @@
+[submodule "rc_control/include/thirdparty/Pololu-Maestro"]
+	path = rc_control/include/thirdparty/Pololu-Maestro
+	url = https://github.com/SafeRoboticsLab/Pololu-Maestro.git
