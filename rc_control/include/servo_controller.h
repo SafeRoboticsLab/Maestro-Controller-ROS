@@ -95,7 +95,7 @@ class ServoController{
         ros::Subscriber _sub_command;
 
         /// Timeout to consider cmd_vel commands old:
-        double _cmd_vel_timeout;
+        double _cmd_vel_timeout = 0.1;
 
     //Private Memeber Functions
     private:

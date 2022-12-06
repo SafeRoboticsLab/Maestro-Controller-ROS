@@ -3,6 +3,6 @@
     <include file="$(find rc_control)/launch/rc_control_node.launch">
         <arg name="ControllerTopic" value="/rc_control_node/g29_control" />
     </include>
-    <include file="$(find zed_wrapper)/launch/zed2.launch"/>   
+    <!-- <include file="$(find zed_wrapper)/launch/zed2.launch"/>    -->
 </launch>
 
