@@ -37,7 +37,7 @@ set(${PROJECT_NAME}_CATKIN_DEPS
     nodelet
     roscpp
     std_msgs
-    rc_control_msgs
+    princeton_racecar_msgs
     realtime_tools
 )
 

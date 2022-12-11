@@ -13,7 +13,7 @@
 #include <realtime_tools/realtime_buffer.h>
 
 // message
-#include <rc_control_msgs/RC_Control.h>
+#include <princeton_racecar_msgs/RC_Control.h>
 #include <algorithm>
 
 /* 
@@ -109,7 +109,7 @@ class ServoController{
          * \brief controller input subscriber callback
          * \param msg Velocity command message (twist)
          */
-        void _subCallback(const rc_control_msgs::RC_Control& msg);
+        void _subCallback(const princeton_racecar_msgs::RC_Control& msg);
 
         /**
          * \brief Convert a percentage of input to the target of pwm output

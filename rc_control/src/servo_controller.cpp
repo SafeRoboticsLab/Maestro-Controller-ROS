@@ -128,7 +128,7 @@ void ServoController::_dynParamUpdate()
     //ROS_INFO_STREAM(_steering_C<< " "<<_throttle_N);
 }
 
-void ServoController::_subCallback(const rc_control_msgs::RC_Control& msg)
+void ServoController::_subCallback(const princeton_racecar_msgs::RC_Control& msg)
 {
     if(_running){
         if (_sub_command.getNumPublishers()>1)
