@@ -56,14 +56,14 @@ catkin_package(
 ## Build ##
 ###########
 #SET(PYTHON_BINDING OFF CACHE BOOL "No python binding for the Pololu-Maestro")
-add_subdirectory(${CMAKE_SOURCE_DIR}/rc_control/include/thirdparty/Pololu-Maestro)
+add_subdirectory(include/thirdparty/Pololu-Maestro)
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
-  ${CMAKE_SOURCE_DIR}/rc_control/include/thirdparty/Pololu-Maestro/src
+  include/thirdparty/Pololu-Maestro/src
 )
 
 add_library(helper_func src/servo_controller.cpp)
