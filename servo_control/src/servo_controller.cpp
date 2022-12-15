@@ -101,7 +101,7 @@ void ServoController::_ReadParameter()
     }
 }
 
-void ServoController::_dynParamCallback(rc_control::calibrationConfig &config, uint32_t level)
+void ServoController::_dynParamCallback(servo_controller_ros::calibrationConfig &config, uint32_t level)
 {
     DynParam dynamic_params;
     dynamic_params.steering_C = config.steering_C;
@@ -128,7 +128,7 @@ void ServoController::_dynParamUpdate()
     //ROS_INFO_STREAM(_steering_C<< " "<<_throttle_N);
 }
 
-void ServoController::_subCallback(const princeton_racecar_msgs::RC_Control& msg)
+void ServoController::_subCallback(const racecar_msgs::ServoMsg& msg)
 {
     if(_running){
         if (_sub_command.getNumPublishers()>1)
@@ -142,9 +142,9 @@ void ServoController::_subCallback(const princeton_racecar_msgs::RC_Control& msg
         _command_struct.reverse = msg.reverse;
         _command_struct.stamp = ros::Time::now();
         _command.writeFromNonRT(_command_struct);
-        // ROS_INFO_STREAM("Receive control - Steer: "<<_command_struct.steer
-        //                     <<" Throttle: "<<_command_struct.throttle
-        //                     <<" Time: "<<_command_struct.stamp);
+        ROS_DEBUG_STREAM("Receive control - Steer: "<<_command_struct.steer
+                            <<" Throttle: "<<_command_struct.throttle
+                            <<" Time: "<<_command_struct.stamp);
     }
 }
 
@@ -196,10 +196,9 @@ void ServoController::update(const ros::Time& time, const ros::Duration& period)
     Commands curr_cmd = *(_command.readFromRT());
     const double dt = (time - curr_cmd.stamp).toSec();
     if (dt > _cmd_vel_timeout){
-        // ROS_WARN_STREAM("TIME OUT "<< dt<<" > "<<_cmd_vel_timeout);
         natural();
         return;
     }
-    _device_list[_device_idx].setTarget(_steering_ch, curr_cmd.steer);
-    _device_list[_device_idx].setTarget(_throttle_ch, curr_cmd.throttle);
+    _device_list[_device_idx].setTarget(_steering_ch, _convertTarget(curr_cmd.steer, true));
+    _device_list[_device_idx].setTarget(_throttle_ch, _convertTarget(curr_cmd.throttle, false));
 }

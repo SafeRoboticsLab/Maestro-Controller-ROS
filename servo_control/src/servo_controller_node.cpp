@@ -4,8 +4,6 @@
 #include <signal.h>
 #include <servo_controller.h>
 
-
-
 void signalHandler(int sig) {
     ROS_INFO("Controller shutdown complete. Calling ros shutdown.");
     ros::shutdown();
@@ -13,7 +11,7 @@ void signalHandler(int sig) {
 
 int main(int argc, char** argv)
 {
-    ros::init(argc, argv, "rc_controller_node", ros::init_options::NoSigintHandler);
+    ros::init(argc, argv, "servo_controller_node", ros::init_options::NoSigintHandler);
     ros::NodeHandle node;    
     ros::NodeHandle private_nh("~");
     signal(SIGINT, signalHandler);

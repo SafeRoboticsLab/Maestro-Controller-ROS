@@ -9,11 +9,11 @@
 
 // dynamic reconfig
 #include <dynamic_reconfigure/server.h>
-#include <rc_control/calibrationConfig.h>
+#include <servo_controller_ros/calibrationConfig.h>
 #include <realtime_tools/realtime_buffer.h>
 
 // message
-#include <princeton_racecar_msgs/RC_Control.h>
+#include <racecar_msgs/ServoMsg.h>
 #include <algorithm>
 
 /* 
@@ -54,8 +54,8 @@ class ServoController{
         ros::NodeHandle _nh;
         ros::NodeHandle _pvt_nh;
 
-        dynamic_reconfigure::Server<rc_control::calibrationConfig> _dyn_reconfig_server;
-        dynamic_reconfigure::Server<rc_control::calibrationConfig>::CallbackType _f;
+        dynamic_reconfigure::Server<servo_controller_ros::calibrationConfig> _dyn_reconfig_server;
+        dynamic_reconfigure::Server<servo_controller_ros::calibrationConfig>::CallbackType _f;
         
         // Servo Controller Status
         bool _running;
@@ -95,7 +95,7 @@ class ServoController{
         ros::Subscriber _sub_command;
 
         /// Timeout to consider cmd_vel commands old:
-        double _cmd_vel_timeout = 0.1;
+        double _cmd_vel_timeout;
 
     //Private Memeber Functions
     private:
@@ -103,13 +103,13 @@ class ServoController{
         int _SearchController();
 
         // ros callback functions
-        void _dynParamCallback(rc_control::calibrationConfig &config, uint32_t level);
+        void _dynParamCallback(servo_controller_ros::calibrationConfig &config, uint32_t level);
 
         /**
          * \brief controller input subscriber callback
          * \param msg Velocity command message (twist)
          */
-        void _subCallback(const princeton_racecar_msgs::RC_Control& msg);
+        void _subCallback(const racecar_msgs::ServoMsg& msg);
 
         /**
          * \brief Convert a percentage of input to the target of pwm output

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(rc_control)
+project(servo_controller_ros)
 
 IF(NOT CMAKE_BUILD_TYPE)
   SET(CMAKE_BUILD_TYPE Release)
@@ -32,13 +32,11 @@ endif()
 ## is used, also find other catkin packages
 
 set(${PROJECT_NAME}_CATKIN_DEPS
-    diagnostic_updater
     dynamic_reconfigure
-    nodelet
     roscpp
     std_msgs
-    princeton_racecar_msgs
     realtime_tools
+    racecar_msgs
 )
 
 
@@ -63,27 +61,27 @@ add_subdirectory(include/thirdparty/Pololu-Maestro)
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
-  include/thirdparty/Pololu-Maestro/src
+  ${CMAKE_SOURCE_DIR}/rc_control/include/thirdparty/Pololu-Maestro/src
 )
 
-add_library(helper_func src/servo_controller.cpp)
-add_dependencies(helper_func ${PROJECT_NAME}_gencfg)
-target_link_libraries(helper_func
+add_library(servo_controller src/servo_controller.cpp)
+add_dependencies(servo_controller ${PROJECT_NAME}_gencfg)
+target_link_libraries(servo_controller
   maestro
   ${catkin_LIBRARIES}
 )
 
 
-add_executable(rc_control_node src/rc_control_node.cpp)
-add_dependencies(rc_control_node ${PROJECT_NAME}_gencfg)
-target_link_libraries(rc_control_node
-  helper_func
+add_executable(servo_controller_node src/servo_controller_node.cpp)
+add_dependencies(servo_controller_node ${PROJECT_NAME}_gencfg)
+target_link_libraries(servo_controller_node
+  servo_controller
   maestro
   ${catkin_LIBRARIES}
 )
 
 # install runtime files
-install(TARGETS rc_control_node
+install(TARGETS servo_controller_node
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
   COMPONENT main
 )
