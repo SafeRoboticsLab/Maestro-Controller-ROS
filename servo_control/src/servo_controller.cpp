@@ -44,6 +44,8 @@ ServoController::ServoController(ros::NodeHandle node, ros::NodeHandle private_n
     _sub_command = _nh.subscribe(_sub_topic, 1 , &ServoController::_subCallback, this);
     ROS_INFO_STREAM("Controller subscribe to topic: "<<_sub_topic);
 
+    _cmd_vel_timeout = 0.1;
+
 }
 
 ServoController::~ServoController()
@@ -142,9 +144,9 @@ void ServoController::_subCallback(const racecar_msgs::ServoMsg& msg)
         _command_struct.reverse = msg.reverse;
         _command_struct.stamp = ros::Time::now();
         _command.writeFromNonRT(_command_struct);
-        ROS_DEBUG_STREAM("Receive control - Steer: "<<_command_struct.steer
-                            <<" Throttle: "<<_command_struct.throttle
-                            <<" Time: "<<_command_struct.stamp);
+        // ROS_DEBUG_STREAM("Receive control - Steer: "<<_command_struct.steer
+        //                     <<" Throttle: "<<_command_struct.throttle
+        //                     <<" Time: "<<_command_struct.stamp);
     }
 }
 
@@ -199,6 +201,6 @@ void ServoController::update(const ros::Time& time, const ros::Duration& period)
         natural();
         return;
     }
-    _device_list[_device_idx].setTarget(_steering_ch, _convertTarget(curr_cmd.steer, true));
-    _device_list[_device_idx].setTarget(_throttle_ch, _convertTarget(curr_cmd.throttle, false));
+    _device_list[_device_idx].setTarget(_steering_ch, curr_cmd.steer);
+    _device_list[_device_idx].setTarget(_throttle_ch, curr_cmd.throttle);
 }
