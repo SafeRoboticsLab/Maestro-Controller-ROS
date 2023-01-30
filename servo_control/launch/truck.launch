@@ -4,7 +4,7 @@
         <arg name="ControllerTopic" value="/servo/g29_control" />
     </include>
 
-    </include file="$(find tagslam_ros)/launch/zed_sdk.launch">
+    <include file="$(find tagslam_ros)/launch/zed_sdk.launch">
         <arg name="node_namespace" value="SLAM" />
         <arg name="rviz" value="false" />
     </include>
