@@ -114,6 +114,9 @@ void ServoController::_dynParamCallback(servo_controller_ros::calibrationConfig 
     dynamic_params.throttle_R = config.throttle_R;
     dynamic_params.throttle_D = config.throttle_D;
 
+    dynamic_params.throttle_dir = config.throttle_dir;
+    dynamic_params.steering_dir = config.steering_dir;
+
     _dynParam.writeFromNonRT(dynamic_params);
 }
 
@@ -128,6 +131,9 @@ void ServoController::_dynParamUpdate()
     _throttle_R = dynamic_params.throttle_R;
     _throttle_D = dynamic_params.throttle_D;
     //ROS_INFO_STREAM(_steering_C<< " "<<_throttle_N);
+
+    _throttle_dir =dynamic_params.throttle_dir;
+    _steering_dir =dynamic_params.steering_dir;
 }
 
 void ServoController::_subCallback(const racecar_msgs::ServoMsg& msg)
@@ -158,6 +164,11 @@ int ServoController::_convertTarget(double percentage, bool is_steer)
     pluse width is in between 1000 and 2000
     So the output is in between 4000 and 8000
     */
+    if(is_steer)
+        percentage *= _steering_dir;
+    else
+        percentage *= _throttle_dir;
+
     double center = is_steer ? _steering_C : _throttle_N;
     double low = is_steer ? _steering_L : _throttle_R;
     double high = is_steer ? _steering_R : _throttle_D;

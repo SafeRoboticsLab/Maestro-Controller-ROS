@@ -64,11 +64,14 @@ class ServoController{
         // calibration parameters
         double _steering_C, _steering_L, _steering_R; // center, max left and max right steering input
         double _throttle_N, _throttle_D, _throttle_R; // netural, max forward and max reverse throttle input 
-        
+        bool _steering_dir = false;
+        bool _throttle_dir=false; // false: positive, true: negative
         struct DynParam
         {
             double steering_C, steering_L, steering_R; // center, max left and max right steering input
             double throttle_N, throttle_D, throttle_R;
+            bool steering_dir = false;
+            bool throttle_dir=false; // false: positive, true: negative
             DynParam() : steering_C(6000), steering_L(4000), steering_R(8000),
                         throttle_N(6000), throttle_D(8000), throttle_R(4000) {}
         };
