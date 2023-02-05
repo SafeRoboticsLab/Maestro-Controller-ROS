@@ -165,9 +165,9 @@ int ServoController::_convertTarget(double percentage, bool is_steer)
     So the output is in between 4000 and 8000
     */
     if(is_steer)
-        percentage *= _steering_dir;
+        percentage = -percentage*(2*_steering_dir-1);
     else
-        percentage *= _throttle_dir;
+        percentage = -percentage*(2*_throttle_dir-1);
 
     double center = is_steer ? _steering_C : _throttle_N;
     double low = is_steer ? _steering_L : _throttle_R;
