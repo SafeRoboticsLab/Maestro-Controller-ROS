@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<launch>
+    <include file="$(find servo_controller_ros)/launch/servo_control_node.launch">
+        <arg name="ControllerTopic" value="/Boss/servo_control" />
+    </include>
+
+    <include file="$(find tagslam_ros)/launch/zed_sdk.launch">
+        <arg name="node_namespace" value="Boss" />
+        <arg name="rviz" value="false" />
+    </include>
+</launch>
+
