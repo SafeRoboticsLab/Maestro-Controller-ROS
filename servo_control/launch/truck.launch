@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 
 <launch>
+<arg name="namespace" default="Truck" doc="namespace of car1"/>
+<group ns="$(arg namespace)">
     <include file="$(find servo_controller_ros)/launch/servo_control_node.launch">
         <arg name="ControllerTopic" value="/Control" />
     </include>
@@ -9,5 +11,6 @@
         <arg name="node_namespace" value="SLAM" />
         <arg name="rviz" value="false" />
     </include>
+</group>
 </launch>
 
