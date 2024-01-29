@@ -4,7 +4,7 @@
 <arg name="namespace" default="Truck" doc="namespace of car1"/>
 <group ns="$(arg namespace)">
     <include file="$(find servo_controller_ros)/launch/servo_control_node.launch">
-        <arg name="ControllerTopic" value="/Control" />
+        <arg name="ControllerTopic" value="Control" />
     </include>
 
     <include file="$(find tagslam_ros)/launch/zed_sdk.launch">
